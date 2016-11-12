@@ -63,9 +63,10 @@ class UI:
         self.gameMap = Map.Map(mapImageFile)
         data = self.gameMap.createMap()
 
-        for y in range(0, len(data)):
-            for x in range(0, len(data[y])):
-                if data[y][x] == "0x0":
+        for x in range(0, len(data)):
+            for y in range(0, len(data[x])):
+                print(data[x][y])
+                if data[x][y] == "0x0":
                     wall = Wall.Wall(x*GlobalVars.SPRITEWIDTH, y*GlobalVars.SPRITEHEIGHT)
                     self.addEntity(wall, 0)
 
@@ -73,7 +74,7 @@ class UI:
     def run(self):
         # Game loop
 
-        self.setMap("map1.png")
+        self.setMap("emptyframe.png")
 
         running = True
         while running:

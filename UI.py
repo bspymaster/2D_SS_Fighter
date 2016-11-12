@@ -1,10 +1,8 @@
 import pygame
 import Map
+import Wall
+import GlobalVars
 
-BLACK = (0, 0, 0)
-WIDTH = 1024
-HEIGHT = 700
-FPS = 60
 
 class UI:
     # constructor
@@ -12,7 +10,7 @@ class UI:
         # Initialize Pygame and create window
         pygame.init()
         pygame.mixer.init()
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        self.screen = pygame.display.set_mode((GlobalVars.SCREENWIDTH, GlobalVars.SCREENHEIGHT))
         pygame.display.set_caption("Jake & Ben's Fall Break Project")
         self.clock = pygame.time.Clock()
 
@@ -29,7 +27,7 @@ class UI:
         self.entities.update()
         self.playerEntities.update()
 
-        self.screen.fill(BLACK)
+        self.screen.fill(GlobalVars.COLORS["BLACK"])
 
         self.nonUpdatedEntities.draw(self.screen)
         self.entities.draw(self.screen)
@@ -63,11 +61,20 @@ class UI:
     # mapImageFile (String): a .png image, where each pixel represents the type of block to add to the map
     def setMap(self, mapImageFile):
         self.gameMap = Map.Map(mapImageFile)
-        self.getMap.createMap()
+        data = self.gameMap.createMap()
+
+        for y in range(0, len(data)):
+            for x in range(0, len(data[y])):
+                if data[y][x] == "0x0":
+                    wall = Wall.Wall(x*GlobalVars.SPRITEWIDTH, y*GlobalVars.SPRITEHEIGHT)
+                    self.addEntity(wall, 0)
 
     # main game loop of the game
     def run(self):
         # Game loop
+
+        self.setMap("map1.png")
+
         running = True
         while running:
             # process input
@@ -77,4 +84,4 @@ class UI:
             self.update()
 
             # lock the screen to a certain FPS
-            self.clock.tick(FPS)
+            self.clock.tick(GlobalVars.FPS)

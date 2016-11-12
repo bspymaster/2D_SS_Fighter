@@ -1,6 +1,6 @@
 def init():
     global SCREENWIDTH
-    SCREENWIDTH = 1024
+    SCREENWIDTH = 1000
     global SCREENHEIGHT
     SCREENHEIGHT = 700
 

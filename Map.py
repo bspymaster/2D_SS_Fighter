@@ -1,4 +1,6 @@
 import pygame
+
+
 class Map:
     def __init__(self,_imageName):
         self.imageName = _imageName
@@ -7,15 +9,15 @@ class Map:
         # load image
         mapImageSurface = pygame.image.load(self.imageName)
 
+        columnData = []
+
         # iterate through image
         for y in range(0,mapImageSurface.get_width()):
-            rowText = ""
+            rowData = []
             for x in range(0,mapImageSurface.get_height()):
-                pixelColor = mapImageSurface.get_at_mapped((x,y))
-                if pixelColor == 0:
-                    rowText += "0"
-                else:
-                    rowText += " "
-            print(rowText)
+                pixelColor = hex(mapImageSurface.get_at_mapped((x,y)))
+                rowData.append(pixelColor)
 
-            # TODO: return a list of what to build
+            columnData.append(rowData)
+
+        return columnData
